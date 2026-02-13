@@ -1,0 +1,20 @@
+{
+  "id": "J-101",
+  "title": "Senior Backend Engineer",
+  "company": "Acme SaaS Inc.",
+  "description": "We are looking for a Senior Backend Engineer to design and build scalable microservices powering our B2B SaaS platform. You will work closely with product and infrastructure teams to deliver reliable APIs serving 10M+ requests per day.",
+  "requirements": [
+    "5+ years backend development experience",
+    "Proficiency in Python or Go",
+    "Experience with distributed systems and microservices",
+    "Familiarity with AWS or GCP cloud infrastructure",
+    "Strong understanding of REST and gRPC APIs"
+  ],
+  "preferred": [
+    "Experience with Kubernetes and Docker",
+    "Background in B2B SaaS products",
+    "Familiarity with observability tools (Datadog, Grafana)"
+  ],
+  "location": "Remote (US)",
+  "department": "Engineering"
+}

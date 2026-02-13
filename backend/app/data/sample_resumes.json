@@ -1,0 +1,62 @@
+[
+  {
+    "id": "C-1001",
+    "candidate_name": "Alex Chen",
+    "email": "alex.chen@email.com",
+    "summary": "Backend engineer with 7 years of experience building distributed systems at scale. Led the architecture of microservices handling 15M daily requests.",
+    "experience": [
+      "Senior Software Engineer at CloudScale (3 years) — Designed event-driven microservices in Python and Go",
+      "Backend Engineer at DataPipe Inc. (4 years) — Built RESTful APIs serving enterprise customers"
+    ],
+    "skills": ["Python", "Go", "Kubernetes", "AWS", "PostgreSQL", "gRPC", "Docker", "Terraform"],
+    "education": ["M.S. Computer Science, Stanford University"]
+  },
+  {
+    "id": "C-1002",
+    "candidate_name": "Priya Sharma",
+    "email": "priya.sharma@email.com",
+    "summary": "Full-stack engineer transitioning to backend-focused roles. Led migration from monolith to microservices architecture at a Series B startup.",
+    "experience": [
+      "Lead Engineer at StartupXYZ (3 years) — Migrated monolith to 12 microservices on AWS ECS",
+      "Software Engineer at TechCorp (2 years) — Built internal APIs in Python/Django"
+    ],
+    "skills": ["Python", "Go", "AWS", "Docker", "Django", "Redis", "PostgreSQL", "CI/CD"],
+    "education": ["B.S. Computer Science, UC Berkeley", "Published paper on API design patterns at PyCon"]
+  },
+  {
+    "id": "C-1003",
+    "candidate_name": "Jordan Williams",
+    "email": "jordan.w@email.com",
+    "summary": "Software engineer with 5 years of full-stack experience, increasingly focused on backend systems and API development.",
+    "experience": [
+      "Software Engineer at MidMarket SaaS Co. (3 years) — Built and maintained REST APIs in Node.js and Python",
+      "Junior Developer at WebAgency (2 years) — Full-stack web development"
+    ],
+    "skills": ["Python", "Node.js", "Docker", "PostgreSQL", "MongoDB", "REST APIs", "GitHub Actions"],
+    "education": ["B.S. Software Engineering, Arizona State University"]
+  },
+  {
+    "id": "C-1004",
+    "candidate_name": "Sam Torres",
+    "email": "sam.torres@email.com",
+    "summary": "Data analyst transitioning into backend engineering. Strong Python skills with growing portfolio of backend projects including REST APIs and data pipelines.",
+    "experience": [
+      "Data Analyst at Analytics Corp (3 years) — Built data pipelines in Python and SQL",
+      "Freelance Developer (1 year) — Created REST APIs for small business clients"
+    ],
+    "skills": ["Python", "SQL", "Flask", "Pandas", "Docker", "REST APIs"],
+    "education": ["Coding bootcamp graduate, General Assembly", "B.A. Mathematics, UCLA"]
+  },
+  {
+    "id": "C-1005",
+    "candidate_name": "Morgan Lee",
+    "email": "morgan.lee@email.com",
+    "summary": "DevOps engineer with deep backend experience. Specializes in building reliable infrastructure and CI/CD pipelines for SaaS products.",
+    "experience": [
+      "Senior DevOps Engineer at SaaSPlatform (4 years) — Managed Kubernetes clusters serving 20M requests/day",
+      "Backend Engineer at InfraTech (3 years) — Built deployment automation in Python and Go"
+    ],
+    "skills": ["Python", "Go", "Kubernetes", "Terraform", "AWS", "Datadog", "Grafana", "Docker", "gRPC"],
+    "education": ["B.S. Computer Engineering, Georgia Tech"]
+  }
+]
