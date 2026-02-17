@@ -17,12 +17,21 @@ export function LandingPage() {
             </div>
             <span className="text-xl font-semibold text-primary">Pairwise</span>
           </div>
-          <Button
-            onClick={() => navigate('/upload')}
-            className="bg-primary hover:bg-primary/90"
-          >
-            Get Started
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/candidate')}
+              className="border-primary text-primary hover:bg-primary/5"
+            >
+              Find Jobs
+            </Button>
+            <Button
+              onClick={() => navigate('/recruiter')}
+              className="bg-primary hover:bg-primary/90"
+            >
+              Post a Role
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -40,20 +49,21 @@ export function LandingPage() {
             for each role, reducing screening time from hours to minutes for US mid-market
             SaaS teams hiring technical talent.
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex gap-4 justify-center flex-wrap">
             <Button
               size="lg"
-              onClick={() => navigate('/upload')}
+              onClick={() => navigate('/recruiter')}
               className="bg-primary hover:bg-primary/90"
             >
-              Start Matching <ArrowRight className="ml-2 w-4 h-4" />
+              I'm a Recruiter <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
             <Button
               size="lg"
               variant="outline"
+              onClick={() => navigate('/candidate')}
               className="border-primary text-primary hover:bg-primary/5"
             >
-              Watch Demo
+              I'm a Candidate <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </div>
         </div>
@@ -168,13 +178,22 @@ export function LandingPage() {
           <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
             Join leading mid-market SaaS companies in finding the perfect technical talent faster
           </p>
-          <Button
-            size="lg"
-            onClick={() => navigate('/upload')}
-            className="bg-accent hover:bg-accent/90 text-accent-foreground"
-          >
-            Start Free Trial <ArrowRight className="ml-2 w-4 h-4" />
-          </Button>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Button
+              size="lg"
+              onClick={() => navigate('/recruiter')}
+              className="bg-accent hover:bg-accent/90 text-accent-foreground"
+            >
+              Post a Role <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+            <Button
+              size="lg"
+              onClick={() => navigate('/candidate')}
+              className="bg-primary-foreground/10 hover:bg-primary-foreground/20 text-primary-foreground border border-primary-foreground/30"
+            >
+              Find Jobs <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </div>
         </div>
       </section>
 

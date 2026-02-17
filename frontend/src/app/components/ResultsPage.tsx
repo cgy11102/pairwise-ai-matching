@@ -35,8 +35,8 @@ export function ResultsPage() {
         <Card className="max-w-md">
           <CardContent className="pt-6 text-center">
             <p className="text-primary mb-4">No match results found.</p>
-            <Button onClick={() => navigate('/upload')} className="bg-primary hover:bg-primary/90">
-              Start New Match
+            <Button onClick={() => navigate('/recruiter')} className="bg-primary hover:bg-primary/90">
+              Go to Dashboard
             </Button>
           </CardContent>
         </Card>
@@ -76,10 +76,10 @@ export function ResultsPage() {
           </div>
           <Button
             variant="outline"
-            onClick={() => navigate('/upload')}
+            onClick={() => navigate('/recruiter')}
             className="border-primary text-primary hover:bg-primary/5"
           >
-            New Search
+            Back to Dashboard
           </Button>
         </div>
       </header>
@@ -278,10 +278,10 @@ export function ResultsPage() {
                   Upload additional resumes or refine your job requirements
                 </p>
                 <Button
-                  onClick={() => navigate('/upload')}
+                  onClick={() => navigate('/recruiter')}
                   className="bg-accent hover:bg-accent/90 text-accent-foreground"
                 >
-                  Start New Search
+                  Back to Dashboard
                 </Button>
               </CardContent>
             </Card>

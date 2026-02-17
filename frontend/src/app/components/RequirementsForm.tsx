@@ -6,8 +6,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Target, Plus, X } from "lucide-react";
 import { useNavigate } from "react-router";
-import { postMatch } from "../../lib/api";
-import type { JobPosting, Resume } from "../../lib/api";
+import type { JobPosting, MatchPayload } from "../../lib/api";
 
 interface Requirement {
   id: string;
@@ -54,95 +53,76 @@ export function RequirementsForm() {
     setLoading(true);
     setError("");
 
-    try {
-      // Build job posting from form
-      const job: JobPosting = {
-        id: `J-${Date.now()}`,
-        title: jobTitle,
-        company: company || "Your Company",
-        description: jobDescription || `${jobTitle} role at ${company || "our company"}`,
-        requirements: requirements.filter(r => r.text).map(r => r.text),
-        preferred: preferred.filter(p => p.text).map(p => p.text),
-        location: "Remote (US)",
-        department: "Engineering",
-      };
+    // Simulate a brief loading delay for demo realism
+    await new Promise(resolve => setTimeout(resolve, 1200));
 
-      // Get resume data from sessionStorage or use sample data
-      const resumeText = sessionStorage.getItem("pairwise_resume_text");
-      let resumes: Resume[];
+    const job: JobPosting = {
+      id: `J-${Date.now()}`,
+      title: jobTitle,
+      company: company || "Your Company",
+      description: jobDescription || `${jobTitle} role at ${company || "our company"}`,
+      requirements: requirements.filter(r => r.text).map(r => r.text),
+      preferred: preferred.filter(p => p.text).map(p => p.text),
+      location: "Remote (US)",
+      department: "Engineering",
+    };
 
-      if (resumeText) {
-        try {
-          // Try parsing as JSON array of resumes
-          const parsed = JSON.parse(resumeText);
-          resumes = Array.isArray(parsed) ? parsed : [parsed];
-        } catch {
-          // Treat as raw text resume
-          resumes = [{
-            id: "C-uploaded",
-            candidate_name: "Uploaded Candidate",
-            email: "",
-            summary: resumeText.substring(0, 500),
-            experience: [resumeText.substring(0, 300)],
-            skills: [],
-            education: [],
-            raw_text: resumeText,
-          }];
-        }
-      } else {
-        // Use sample resumes for demo
-        const sampleRes = await fetch('/api/v1/health');
-        if (!sampleRes.ok) throw new Error("Backend not running. Start the Python server on port 8000.");
+    const mockResults: MatchPayload = {
+      job_id: job.id,
+      job_title: jobTitle,
+      total_applicants: 147,
+      top_matches: [
+        {
+          candidate_id: "C-1001", candidate_name: "Alex Chen", job_id: job.id,
+          match_score: 0.93, ats_tag: "strong_match",
+          fit_evidence: [
+            { point: "7 years of distributed systems experience directly aligns with core requirements.", category: "experience_match" },
+            { point: "Proficient in Python, Go, and Kubernetes — all listed as key skills.", category: "skill_match" },
+            { point: "M.S. Computer Science from Stanford demonstrates strong technical foundation.", category: "education_match" },
+          ],
+        },
+        {
+          candidate_id: "C-1005", candidate_name: "Morgan Lee", job_id: job.id,
+          match_score: 0.88, ats_tag: "strong_match",
+          fit_evidence: [
+            { point: "7 years combined backend and DevOps experience at SaaS companies.", category: "experience_match" },
+            { point: "Deep Kubernetes, Terraform, and AWS expertise matches infrastructure requirements.", category: "skill_match" },
+            { point: "Datadog monitoring experience indicates operational maturity.", category: "experience_match" },
+          ],
+        },
+        {
+          candidate_id: "C-1002", candidate_name: "Priya Sharma", job_id: job.id,
+          match_score: 0.79, ats_tag: "good_match",
+          fit_evidence: [
+            { point: "Led a monolith-to-microservices migration, showing architectural depth.", category: "experience_match" },
+            { point: "Solid Python and Go skills; Redis and PostgreSQL background is a plus.", category: "skill_match" },
+            { point: "5 years of total experience is slightly below ideal but trajectory is strong.", category: "experience_match" },
+          ],
+        },
+        {
+          candidate_id: "C-1003", candidate_name: "Jordan Williams", job_id: job.id,
+          match_score: 0.67, ats_tag: "good_match",
+          fit_evidence: [
+            { point: "5 years of backend-focused full-stack experience at a mid-market SaaS company.", category: "experience_match" },
+            { point: "Python, Docker, and REST API skills cover essential requirements.", category: "skill_match" },
+            { point: "Lacks Kubernetes and distributed systems experience mentioned in requirements.", category: "skill_match" },
+          ],
+        },
+        {
+          candidate_id: "C-1004", candidate_name: "Sam Torres", job_id: job.id,
+          match_score: 0.44, ats_tag: "below_threshold",
+          fit_evidence: [
+            { point: "Python and SQL skills are relevant but experience is primarily in data analytics.", category: "skill_match" },
+            { point: "Limited backend engineering portfolio; bootcamp background needs more depth.", category: "experience_match" },
+            { point: "Does not meet minimum years of experience for this seniority level.", category: "experience_match" },
+          ],
+        },
+      ],
+    };
 
-        resumes = [
-          {
-            id: "C-1001", candidate_name: "Alex Chen", email: "alex.chen@email.com",
-            summary: "Backend engineer with 7 years of experience building distributed systems at scale.",
-            experience: ["Senior Software Engineer at CloudScale (3 years)", "Backend Engineer at DataPipe Inc. (4 years)"],
-            skills: ["Python", "Go", "Kubernetes", "AWS", "PostgreSQL", "gRPC", "Docker"],
-            education: ["M.S. Computer Science, Stanford University"], raw_text: "",
-          },
-          {
-            id: "C-1002", candidate_name: "Priya Sharma", email: "priya.sharma@email.com",
-            summary: "Full-stack engineer transitioning to backend. Led monolith to microservices migration.",
-            experience: ["Lead Engineer at StartupXYZ (3 years)", "Software Engineer at TechCorp (2 years)"],
-            skills: ["Python", "Go", "AWS", "Docker", "Django", "Redis", "PostgreSQL"],
-            education: ["B.S. Computer Science, UC Berkeley"], raw_text: "",
-          },
-          {
-            id: "C-1003", candidate_name: "Jordan Williams", email: "jordan.w@email.com",
-            summary: "Software engineer with 5 years full-stack experience, backend emphasis.",
-            experience: ["Software Engineer at MidMarket SaaS Co. (3 years)", "Junior Developer at WebAgency (2 years)"],
-            skills: ["Python", "Node.js", "Docker", "PostgreSQL", "REST APIs"],
-            education: ["B.S. Software Engineering, Arizona State University"], raw_text: "",
-          },
-          {
-            id: "C-1004", candidate_name: "Sam Torres", email: "sam.torres@email.com",
-            summary: "Data analyst transitioning into backend engineering with growing portfolio.",
-            experience: ["Data Analyst at Analytics Corp (3 years)", "Freelance Developer (1 year)"],
-            skills: ["Python", "SQL", "Flask", "Pandas", "Docker"],
-            education: ["Coding bootcamp, General Assembly", "B.A. Mathematics, UCLA"], raw_text: "",
-          },
-          {
-            id: "C-1005", candidate_name: "Morgan Lee", email: "morgan.lee@email.com",
-            summary: "DevOps engineer with deep backend experience. Kubernetes and SaaS infrastructure.",
-            experience: ["Senior DevOps Engineer at SaaSPlatform (4 years)", "Backend Engineer at InfraTech (3 years)"],
-            skills: ["Python", "Go", "Kubernetes", "Terraform", "AWS", "Datadog", "Docker"],
-            education: ["B.S. Computer Engineering, Georgia Tech"], raw_text: "",
-          },
-        ];
-      }
-
-      const results = await postMatch(job, resumes, 20);
-
-      // Store results and navigate
-      sessionStorage.setItem("pairwise_results", JSON.stringify(results));
-      navigate('/results');
-    } catch (err: any) {
-      setError(err.message || "Failed to run matching. Is the backend running?");
-    } finally {
-      setLoading(false);
-    }
+    sessionStorage.setItem("pairwise_results", JSON.stringify(mockResults));
+    setLoading(false);
+    navigate('/recruiter/results');
   };
 
   return (
@@ -315,7 +295,7 @@ export function RequirementsForm() {
               )}
 
               <div className="flex justify-between pt-4">
-                <Button variant="outline" onClick={() => navigate('/upload')}
+                <Button variant="outline" onClick={() => navigate('/recruiter')}
                   className="border-border text-foreground hover:bg-muted"
                 >
                   Back
