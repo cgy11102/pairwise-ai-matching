@@ -1,7 +1,7 @@
 {
   "id": "J-101",
   "title": "Senior Backend Engineer",
-  "company": "Acme SaaS Inc.",
+  "company": "CloudScale Inc.",
   "description": "We are looking for a Senior Backend Engineer to design and build scalable microservices powering our B2B SaaS platform. You will work closely with product and infrastructure teams to deliver reliable APIs serving 10M+ requests per day.",
   "requirements": [
     "5+ years backend development experience",

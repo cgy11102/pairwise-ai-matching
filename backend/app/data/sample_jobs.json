@@ -1,0 +1,202 @@
+[
+  {
+    "id": "J-101",
+    "title": "Senior Backend Engineer",
+    "company": "CloudScale Inc.",
+    "description": "Design and build scalable microservices powering our B2B SaaS platform. You will own backend architecture decisions, lead code reviews, and mentor junior engineers. Our APIs serve 10M+ requests per day across three AWS regions.",
+    "requirements": [
+      "5+ years backend development experience",
+      "Proficiency in Python or Go",
+      "Experience with distributed systems and microservices",
+      "Familiarity with AWS or GCP cloud infrastructure",
+      "Strong understanding of REST and gRPC APIs"
+    ],
+    "preferred": [
+      "Experience with Kubernetes and Docker",
+      "Background in B2B SaaS products",
+      "Familiarity with observability tools such as Datadog or Grafana"
+    ],
+    "location": "Remote (US)",
+    "department": "Engineering"
+  },
+  {
+    "id": "J-102",
+    "title": "ML Engineer",
+    "company": "Analytix AI",
+    "description": "Build and deploy machine learning models into production. You will collaborate with data scientists to take models from notebook to scalable inference pipelines serving real-time predictions for our enterprise customers.",
+    "requirements": [
+      "3+ years of ML engineering or MLOps experience",
+      "Strong Python skills including PyTorch or TensorFlow",
+      "Experience deploying models via REST APIs or batch pipelines",
+      "Familiarity with feature stores and model registries",
+      "Experience with cloud platforms (AWS SageMaker, GCP Vertex AI, or Azure ML)"
+    ],
+    "preferred": [
+      "Experience with LLMs or transformer-based models",
+      "MLflow or Weights and Biases for experiment tracking",
+      "Kubernetes-based model serving"
+    ],
+    "location": "Remote (US)",
+    "department": "Data & AI"
+  },
+  {
+    "id": "J-103",
+    "title": "Product Manager, Core Platform",
+    "company": "TechFlow SaaS",
+    "description": "Define and drive the product roadmap for our core B2B SaaS platform. Partner closely with engineering, design, and customers to ship features that drive retention and expansion revenue.",
+    "requirements": [
+      "3+ years B2B SaaS product management experience",
+      "Strong data analysis and hypothesis-driven decision making",
+      "Experience with agile delivery and sprint planning",
+      "Excellent written and verbal communication skills",
+      "Track record of launching features with measurable business outcomes"
+    ],
+    "preferred": [
+      "Technical background or CS degree",
+      "Familiarity with CRM or ATS tools",
+      "Experience with pricing and packaging decisions"
+    ],
+    "location": "Hybrid — Austin, TX",
+    "department": "Product"
+  },
+  {
+    "id": "J-104",
+    "title": "Data Engineer",
+    "company": "DataPipe Systems",
+    "description": "Build and maintain robust data pipelines that move, transform, and serve data across our enterprise data platform. You will work closely with analytics, data science, and product engineering to ensure reliable data availability.",
+    "requirements": [
+      "4+ years data engineering experience",
+      "Proficiency in SQL and Python",
+      "Experience with Apache Spark or dbt",
+      "Familiarity with cloud data warehouses such as Snowflake, BigQuery, or Redshift",
+      "Understanding of data modeling and ETL/ELT design patterns"
+    ],
+    "preferred": [
+      "Experience with Apache Kafka or real-time streaming",
+      "Airflow or Dagster for pipeline orchestration",
+      "Data quality frameworks such as Great Expectations"
+    ],
+    "location": "Remote (US)",
+    "department": "Data & AI"
+  },
+  {
+    "id": "J-105",
+    "title": "DevOps Engineer",
+    "company": "InfraTech Solutions",
+    "description": "Own the infrastructure, CI/CD pipelines, and reliability engineering for our SaaS platform. You will drive automation, reduce toil, and ensure 99.9% uptime for our enterprise customers.",
+    "requirements": [
+      "4+ years DevOps or Site Reliability Engineering experience",
+      "Strong Kubernetes and Docker experience",
+      "Infrastructure as code with Terraform or Pulumi",
+      "Experience with CI/CD pipelines (GitHub Actions, CircleCI, or Jenkins)",
+      "Proficiency in at least one scripting language (Python or Bash)"
+    ],
+    "preferred": [
+      "AWS or GCP certifications",
+      "Observability tools such as Prometheus, Grafana, or Datadog",
+      "On-call rotation experience with incident management"
+    ],
+    "location": "Remote (US)",
+    "department": "Engineering"
+  },
+  {
+    "id": "J-106",
+    "title": "Frontend Engineer",
+    "company": "UXPlatform Co.",
+    "description": "Build fast, accessible, and delightful user interfaces for our B2B SaaS product used by 50,000+ daily users. You will collaborate with design and product to translate complex workflows into intuitive experiences.",
+    "requirements": [
+      "4+ years frontend engineering experience",
+      "Expert-level React and TypeScript skills",
+      "Experience with state management (Redux, Zustand, or React Query)",
+      "Strong understanding of web performance optimization",
+      "Familiarity with design systems and component libraries"
+    ],
+    "preferred": [
+      "Experience with Next.js or Vite",
+      "Accessibility (WCAG 2.1) implementation experience",
+      "Experience with Figma-to-code workflows"
+    ],
+    "location": "Remote (US)",
+    "department": "Engineering"
+  },
+  {
+    "id": "J-107",
+    "title": "Data Scientist",
+    "company": "Analytix AI",
+    "description": "Develop predictive models and statistical analyses that power customer-facing analytics and internal decision-making. You will work across the full data lifecycle from raw ingestion to production deployment and monitoring.",
+    "requirements": [
+      "3+ years data science experience in a production environment",
+      "Strong Python skills with scikit-learn or PyTorch",
+      "Solid SQL and data wrangling capabilities",
+      "Experience communicating model results to non-technical stakeholders",
+      "Familiarity with A/B testing and experimentation frameworks"
+    ],
+    "preferred": [
+      "NLP or LLM fine-tuning experience",
+      "MLflow or similar experiment tracking tools",
+      "Experience with causal inference or uplift modeling"
+    ],
+    "location": "Remote (US)",
+    "department": "Data & AI"
+  },
+  {
+    "id": "J-108",
+    "title": "Security Engineer",
+    "company": "SecureLayer Inc.",
+    "description": "Design and implement security controls across our cloud-native SaaS platform. You will lead security reviews, conduct threat modeling, and partner with engineering to embed security practices into the SDLC.",
+    "requirements": [
+      "4+ years application or cloud security engineering experience",
+      "Familiarity with OWASP Top 10 and secure coding practices",
+      "Experience with cloud security controls (AWS IAM, VPC, GuardDuty or equivalents)",
+      "Knowledge of SOC 2, ISO 27001, or similar compliance frameworks",
+      "Experience with penetration testing or red team exercises"
+    ],
+    "preferred": [
+      "CISSP, CEH, or AWS Security Specialty certification",
+      "Experience with SIEM and threat detection platforms",
+      "Familiarity with zero-trust architecture"
+    ],
+    "location": "Remote (US)",
+    "department": "Engineering"
+  },
+  {
+    "id": "J-109",
+    "title": "Customer Success Manager",
+    "company": "TechFlow SaaS",
+    "description": "Own post-sale relationships with a portfolio of mid-market SaaS customers. You will drive onboarding, adoption, and renewal, acting as the voice of the customer internally and a trusted advisor externally.",
+    "requirements": [
+      "3+ years customer success or account management in B2B SaaS",
+      "Proven track record of hitting net revenue retention targets",
+      "Strong project management and organization skills",
+      "Experience with Salesforce or Gainsight",
+      "Excellent presentation and executive communication skills"
+    ],
+    "preferred": [
+      "Technical aptitude to understand API-based products",
+      "Experience with QBR (Quarterly Business Review) facilitation",
+      "Background in HR tech, recruiting, or talent platforms"
+    ],
+    "location": "Hybrid — Austin, TX",
+    "department": "Customer Success"
+  },
+  {
+    "id": "J-110",
+    "title": "Recruiting Operations Analyst",
+    "company": "CloudScale Inc.",
+    "description": "Support the talent acquisition team by managing ATS data, reporting on recruiting metrics, and improving sourcing and screening workflows. You will be the operational backbone that helps our recruiters work faster and smarter.",
+    "requirements": [
+      "2+ years recruiting operations, HR analytics, or talent acquisition experience",
+      "Proficiency with ATS platforms such as Greenhouse, Lever, or Ashby",
+      "Strong Excel or Google Sheets skills for reporting and analysis",
+      "Attention to detail and ability to manage multiple open requisitions",
+      "Experience with HRIS systems and data hygiene"
+    ],
+    "preferred": [
+      "Familiarity with SQL or basic data querying",
+      "Experience building recruiter dashboards or BI reports",
+      "Knowledge of EEOC compliance and fair hiring practices"
+    ],
+    "location": "Hybrid — San Francisco, CA",
+    "department": "People Operations"
+  }
+]
