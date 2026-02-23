@@ -4,9 +4,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { Target, Plus, X } from "lucide-react";
+import { Target, Plus, X, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
-import type { JobPosting, MatchPayload } from "../../lib/api";
+import type { JobPosting } from "../../lib/api";
+import { postMatch } from "../../lib/api";
+import SAMPLE_RESUMES from "../../lib/sampleResumes.json";
 
 interface Requirement {
   id: string;
@@ -53,9 +55,6 @@ export function RequirementsForm() {
     setLoading(true);
     setError("");
 
-    // Simulate a brief loading delay for demo realism
-    await new Promise(resolve => setTimeout(resolve, 1200));
-
     const job: JobPosting = {
       id: `J-${Date.now()}`,
       title: jobTitle,
@@ -67,62 +66,19 @@ export function RequirementsForm() {
       department: "Engineering",
     };
 
-    const mockResults: MatchPayload = {
-      job_id: job.id,
-      job_title: jobTitle,
-      total_applicants: 147,
-      top_matches: [
-        {
-          candidate_id: "C-1001", candidate_name: "Alex Chen", job_id: job.id,
-          match_score: 0.93, ats_tag: "strong_match",
-          fit_evidence: [
-            { point: "7 years of distributed systems experience directly aligns with core requirements.", category: "experience_match" },
-            { point: "Proficient in Python, Go, and Kubernetes — all listed as key skills.", category: "skill_match" },
-            { point: "M.S. Computer Science from Stanford demonstrates strong technical foundation.", category: "education_match" },
-          ],
-        },
-        {
-          candidate_id: "C-1005", candidate_name: "Morgan Lee", job_id: job.id,
-          match_score: 0.88, ats_tag: "strong_match",
-          fit_evidence: [
-            { point: "7 years combined backend and DevOps experience at SaaS companies.", category: "experience_match" },
-            { point: "Deep Kubernetes, Terraform, and AWS expertise matches infrastructure requirements.", category: "skill_match" },
-            { point: "Datadog monitoring experience indicates operational maturity.", category: "experience_match" },
-          ],
-        },
-        {
-          candidate_id: "C-1002", candidate_name: "Priya Sharma", job_id: job.id,
-          match_score: 0.79, ats_tag: "good_match",
-          fit_evidence: [
-            { point: "Led a monolith-to-microservices migration, showing architectural depth.", category: "experience_match" },
-            { point: "Solid Python and Go skills; Redis and PostgreSQL background is a plus.", category: "skill_match" },
-            { point: "5 years of total experience is slightly below ideal but trajectory is strong.", category: "experience_match" },
-          ],
-        },
-        {
-          candidate_id: "C-1003", candidate_name: "Jordan Williams", job_id: job.id,
-          match_score: 0.67, ats_tag: "good_match",
-          fit_evidence: [
-            { point: "5 years of backend-focused full-stack experience at a mid-market SaaS company.", category: "experience_match" },
-            { point: "Python, Docker, and REST API skills cover essential requirements.", category: "skill_match" },
-            { point: "Lacks Kubernetes and distributed systems experience mentioned in requirements.", category: "skill_match" },
-          ],
-        },
-        {
-          candidate_id: "C-1004", candidate_name: "Sam Torres", job_id: job.id,
-          match_score: 0.44, ats_tag: "below_threshold",
-          fit_evidence: [
-            { point: "Python and SQL skills are relevant but experience is primarily in data analytics.", category: "skill_match" },
-            { point: "Limited backend engineering portfolio; bootcamp background needs more depth.", category: "experience_match" },
-            { point: "Does not meet minimum years of experience for this seniority level.", category: "experience_match" },
-          ],
-        },
-      ],
-    };
-
-    sessionStorage.setItem("pairwise_results", JSON.stringify(mockResults));
-    setLoading(false);
-    navigate('/recruiter/results');
+    try {
+      const results = await postMatch(job, SAMPLE_RESUMES as any, 20);
+      sessionStorage.setItem("pairwise_results", JSON.stringify(results));
+      navigate("/recruiter/results");
+    } catch (err: any) {
+      setError(
+        err?.message?.includes("fetch")
+          ? "Could not reach the Pairwise backend. Make sure the server is running on port 8000."
+          : (err?.message || "Something went wrong. Please try again.")
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -306,7 +262,12 @@ export function RequirementsForm() {
                   disabled={!jobTitle || !requirements.some(r => r.text) || loading}
                   className="bg-primary hover:bg-primary/90 disabled:opacity-50"
                 >
-                  {loading ? "Matching..." : "Find Top Candidates"}
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Running AI matching...
+                    </span>
+                  ) : "Find Top Candidates"}
                 </Button>
               </div>
             </CardContent>

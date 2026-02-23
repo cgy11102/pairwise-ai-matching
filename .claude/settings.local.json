@@ -4,7 +4,11 @@
       "Bash(findstr:*)",
       "Bash(Get-Content \"C:\\\\Users\\\\Chand\\\\OneDrive\\\\Personal\\\\Arizona State University\\\\MS-AIB - AI Business Strategy\\\\Group_project\\\\backend\\\\.env\")",
       "Bash(Where-Object { $_ -notmatch \"GROQ_API_KEY\" })",
-      "Bash(powershell -Command:*)"
+      "Bash(powershell -Command:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)"
     ]
   }
 }

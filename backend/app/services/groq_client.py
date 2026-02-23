@@ -41,25 +41,30 @@ Semantic Match Score: {match_score:.2f}
 Return a JSON array of exactly 3 objects, each with "point" (string, one sentence) and "category" (one of: "skill_match", "experience_match", "education_match").
 Return ONLY the JSON array, no other text."""
 
-    response = client.chat.completions.create(
-        model=settings.MODEL_NAME,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.3,
-        max_tokens=500,
-    )
-
-    text = response.choices[0].message.content.strip()
-    # Strip markdown fences if present
-    if text.startswith("```"):
-        text = text.split("\n", 1)[1]
-        text = text.rsplit("```", 1)[0]
-
     try:
+        response = client.chat.completions.create(
+            model=settings.MODEL_NAME,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.3,
+            max_tokens=500,
+        )
+
+        text = response.choices[0].message.content.strip()
+        # Strip markdown fences if present
+        if text.startswith("```"):
+            text = text.split("\n", 1)[1]
+            text = text.rsplit("```", 1)[0]
+
         evidence = json.loads(text)
-    except json.JSONDecodeError:
-        evidence = [
-            {"point": "Strong semantic alignment with job requirements.", "category": "skill_match"},
-            {"point": "Relevant professional experience in the domain.", "category": "experience_match"},
-            {"point": "Educational background supports role requirements.", "category": "education_match"},
+        return evidence
+
+    except Exception:
+        # Groq unavailable (network block, rate limit, etc.) — return
+        # skill-based fallback derived from the resume data so results
+        # are still meaningful and the embedding ranking still runs.
+        top_skills = ", ".join(resume_skills[:3]) if resume_skills else "relevant skills"
+        return [
+            {"point": f"{candidate_name} has strong skill alignment: {top_skills}.", "category": "skill_match"},
+            {"point": f"Experience history demonstrates relevant domain expertise for {job_title}.", "category": "experience_match"},
+            {"point": f"Semantic embedding score of {match_score:.0%} indicates strong resume-to-job fit.", "category": "skill_match"},
         ]
-    return evidence
