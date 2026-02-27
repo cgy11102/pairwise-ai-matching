@@ -5,6 +5,7 @@ import { Badge } from "./ui/badge";
 import { Target, TrendingUp, CheckCircle, ArrowRight, Users, Mail, Send } from "lucide-react";
 import { useNavigate } from "react-router";
 import type { MatchPayload, MatchResult } from "../../lib/api";
+import { CandidateDetailsPage } from "./CandidateDetailsPage"; // Added import for CandidateDetailsPage
 
 const tagStyles: Record<string, { bg: string; text: string }> = {
   strong_match: { bg: "bg-secondary/10", text: "text-secondary" },
@@ -295,7 +296,7 @@ export function ResultsPage() {
                             <div className="h-2 bg-primary/10 rounded-full overflow-hidden">
                               <div
                                 className={`h-full rounded-full transition-all ${match.match_score >= 0.82 ? 'bg-secondary' :
-                                    match.match_score >= 0.65 ? 'bg-accent' : 'bg-muted'
+                                  match.match_score >= 0.65 ? 'bg-accent' : 'bg-muted'
                                   }`}
                                 style={{ width: `${parseFloat(pct)}%` }}
                               />
@@ -331,8 +332,12 @@ export function ResultsPage() {
                                 <Button
                                   variant="outline"
                                   className="border-primary text-primary hover:bg-primary/5"
+                                  onClick={() => {
+                                    sessionStorage.setItem("pairwise_active_candidate", JSON.stringify(match));
+                                    navigate(`/recruiter/candidate/${match.candidate_id}`);
+                                  }}
                                 >
-                                  Save for Later
+                                  Dive Deeper
                                 </Button>
                               </div>
                             </div>

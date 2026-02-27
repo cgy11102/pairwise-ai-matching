@@ -6,6 +6,7 @@ import { ResultsPage } from "./components/ResultsPage";
 import { RecruiterDashboard } from "./components/RecruiterDashboard";
 import { CandidateDashboard } from "./components/CandidateDashboard";
 import { JobDescriptionPage } from "./components/JobDescriptionPage";
+import { CandidateDetailsPage } from "./components/CandidateDetailsPage";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/recruiter" element={<RecruiterDashboard />} />
         <Route path="/recruiter/post" element={<RequirementsForm />} />
         <Route path="/recruiter/results" element={<ResultsPage />} />
+        <Route path="/recruiter/candidate/:id" element={<CandidateDetailsPage />} />
         {/* Candidate flow */}
         <Route path="/candidate" element={<CandidateDashboard />} />
         <Route path="/candidate/job/:id" element={<JobDescriptionPage />} />
