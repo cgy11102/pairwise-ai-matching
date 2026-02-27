@@ -73,7 +73,7 @@ export function RequirementsForm() {
     } catch (err: any) {
       setError(
         err?.message?.includes("fetch")
-          ? "Could not reach the Pairwise backend. Make sure the server is running on port 8000."
+          ? "Could not reach the Pairwise backend. Ensure your VITE_API_URL is correctly set."
           : (err?.message || "Something went wrong. Please try again.")
       );
     } finally {
