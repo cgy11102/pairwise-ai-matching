@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import { ArrowRight, Zap, Target, TrendingUp, CheckCircle } from "lucide-react";
+import { ArrowRight, Zap, Target, TrendingUp, CheckCircle, Briefcase } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export function LandingPage() {
@@ -123,12 +123,12 @@ export function LandingPage() {
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-secondary" />
+                      <Briefcase className="w-5 h-5 text-secondary" />
                     </div>
                     <div>
-                      <h3 className="mb-2 text-primary">Upload Resumes</h3>
+                      <h3 className="mb-2 text-primary">Upload Your Experience</h3>
                       <p className="text-muted-foreground">
-                        Upload candidate resumes in any format for AI-powered analysis
+                        Submit your profile in any format to be matched on actual skills, not just keywords.
                       </p>
                     </div>
                   </div>
@@ -138,12 +138,12 @@ export function LandingPage() {
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-secondary" />
+                      <Target className="w-5 h-5 text-secondary" />
                     </div>
                     <div>
-                      <h3 className="mb-2 text-primary">Define Requirements</h3>
+                      <h3 className="mb-2 text-primary">Define the Ideal Hire</h3>
                       <p className="text-muted-foreground">
-                        Add job requirements so our semantic engine can match beyond keywords
+                        Describe your open role and let our semantic engine find candidates who truly align.
                       </p>
                     </div>
                   </div>
@@ -153,12 +153,12 @@ export function LandingPage() {
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-secondary" />
+                      <Zap className="w-5 h-5 text-secondary" />
                     </div>
                     <div>
-                      <h3 className="mb-2 text-primary">Get Top 20 Matches</h3>
+                      <h3 className="mb-2 text-primary">Get Precision Matches</h3>
                       <p className="text-muted-foreground">
-                        Receive ranked candidates with Match Scores, Fit Evidence, and ATS tags
+                        Instantly review the top 20 candidates with evidence-based fit scores and insights.
                       </p>
                     </div>
                   </div>

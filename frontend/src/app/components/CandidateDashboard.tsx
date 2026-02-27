@@ -50,8 +50,10 @@ export function CandidateDashboard() {
   const [name, setName] = useState("Your Name");
   const [desiredFields, setDesiredFields] = useState<string[]>(["Software Engineer"]);
   const [fieldInput, setFieldInput] = useState("");
-  const [experienceLevel, setExperienceLevel] = useState<ExperienceLevel>("Mid");
-  const [locationPref, setLocationPref] = useState<LocationPref>("Remote");
+  const [experienceLevelsSelected, setExperienceLevelsSelected] = useState<ExperienceLevel[]>(["Mid"]);
+  const [locationPrefsSelected, setLocationPrefsSelected] = useState<LocationPref[]>(["Remote"]);
+  const [specificLocations, setSpecificLocations] = useState<string[]>([]);
+  const [locationInput, setLocationInput] = useState("");
   const [profileSaved, setProfileSaved] = useState(false);
 
   // Resume upload state
@@ -72,6 +74,34 @@ export function CandidateDashboard() {
 
   const removeField = (field: string) => {
     setDesiredFields(desiredFields.filter((f) => f !== field));
+  };
+
+  const addLocation = (loc: string) => {
+    const trimmed = loc.trim();
+    if (trimmed && !specificLocations.includes(trimmed)) {
+      setSpecificLocations([...specificLocations, trimmed]);
+    }
+    setLocationInput("");
+  };
+
+  const removeLocation = (loc: string) => {
+    setSpecificLocations(specificLocations.filter((l) => l !== loc));
+  };
+
+  const toggleExperienceLevel = (level: ExperienceLevel) => {
+    if (experienceLevelsSelected.includes(level)) {
+      setExperienceLevelsSelected(experienceLevelsSelected.filter((l) => l !== level));
+    } else {
+      setExperienceLevelsSelected([...experienceLevelsSelected, level]);
+    }
+  };
+
+  const toggleLocationPref = (pref: LocationPref) => {
+    if (locationPrefsSelected.includes(pref)) {
+      setLocationPrefsSelected(locationPrefsSelected.filter((p) => p !== pref));
+    } else {
+      setLocationPrefsSelected([...locationPrefsSelected, pref]);
+    }
   };
 
   // ── Resume upload helpers ──
@@ -105,11 +135,7 @@ export function CandidateDashboard() {
 
   // ── Job board ──
   const handleViewRole = (roleId: string) => {
-    const role = MOCK_ROLES.find((r) => r.id === roleId);
-    if (role) {
-      sessionStorage.setItem("pairwise_results", JSON.stringify(role.results));
-      navigate("/recruiter/results");
-    }
+    navigate(`/candidate/job/${roleId}`);
   };
 
   const filteredRoles = MOCK_ROLES.filter((role) => {
@@ -220,11 +246,10 @@ export function CandidateDashboard() {
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                         onClick={() => fileInputRef.current?.click()}
-                        className={`border-2 border-dashed rounded-lg p-5 text-center cursor-pointer transition-colors ${
-                          isDragging
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50 hover:bg-primary/2"
-                        }`}
+                        className={`border-2 border-dashed rounded-lg p-5 text-center cursor-pointer transition-colors ${isDragging
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/50 hover:bg-primary/2"
+                          }`}
                       >
                         <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
                           <Upload className="w-5 h-5 text-primary" />
@@ -311,19 +336,18 @@ export function CandidateDashboard() {
 
                   {/* Experience Level */}
                   <div className="space-y-2">
-                    <Label className="text-primary">Experience Level</Label>
+                    <Label className="text-primary">Experience Levels</Label>
                     <div className="flex gap-2">
                       {experienceLevels.map((level) => (
                         <Button
                           key={level}
                           size="sm"
                           variant="outline"
-                          onClick={() => setExperienceLevel(level)}
-                          className={`flex-1 transition-colors ${
-                            experienceLevel === level
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : "border-border text-muted-foreground hover:border-primary hover:text-primary"
-                          }`}
+                          onClick={() => toggleExperienceLevel(level)}
+                          className={`flex-1 transition-colors ${experienceLevelsSelected.includes(level)
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "border-border text-muted-foreground hover:border-primary hover:text-primary"
+                            }`}
                         >
                           {level}
                         </Button>
@@ -333,23 +357,71 @@ export function CandidateDashboard() {
 
                   {/* Location Preference */}
                   <div className="space-y-2">
-                    <Label className="text-primary">Location Preference</Label>
+                    <Label className="text-primary">Location Preferences</Label>
                     <div className="flex gap-2">
                       {locationPrefs.map((loc) => (
                         <Button
                           key={loc}
                           size="sm"
                           variant="outline"
-                          onClick={() => setLocationPref(loc)}
-                          className={`flex-1 transition-colors ${
-                            locationPref === loc
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : "border-border text-muted-foreground hover:border-primary hover:text-primary"
-                          }`}
+                          onClick={() => toggleLocationPref(loc)}
+                          className={`flex-1 transition-colors ${locationPrefsSelected.includes(loc)
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "border-border text-muted-foreground hover:border-primary hover:text-primary"
+                            }`}
                         >
                           {loc}
                         </Button>
                       ))}
+                    </div>
+                  </div>
+
+                  {/* Specific Locations */}
+                  <div className="space-y-2 pb-4">
+                    <Label className="text-primary">Specific Locations</Label>
+
+                    {specificLocations.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {specificLocations.map((loc) => (
+                          <Badge
+                            key={loc}
+                            className="bg-primary/10 text-primary border-0 flex items-center gap-1 pr-1"
+                          >
+                            <MapPin className="w-3 h-3" />
+                            {loc}
+                            <button
+                              onClick={() => removeLocation(loc)}
+                              className="ml-0.5 rounded-full hover:bg-primary/20 p-0.5"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Custom input */}
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Add a city/state (e.g. Austin, TX)..."
+                        value={locationInput}
+                        onChange={(e) => setLocationInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addLocation(locationInput);
+                          }
+                        }}
+                        className="border-border focus:border-primary text-sm"
+                      />
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => addLocation(locationInput)}
+                        className="border-primary text-primary hover:bg-primary/5 flex-shrink-0"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
 
@@ -386,11 +458,10 @@ export function CandidateDashboard() {
                     <button
                       key={filter}
                       onClick={() => setMatchFilter(filter)}
-                      className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                        matchFilter === filter
-                          ? "bg-primary text-primary-foreground"
-                          : "text-muted-foreground hover:text-primary"
-                      }`}
+                      className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${matchFilter === filter
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-primary"
+                        }`}
                     >
                       {filter}
                     </button>
@@ -433,13 +504,12 @@ export function CandidateDashboard() {
                                   <p className="text-sm text-muted-foreground">{role.company}</p>
                                 </div>
                                 <Badge
-                                  className={`flex-shrink-0 border-0 text-xs ${
-                                    score >= 0.82
-                                      ? "bg-secondary/10 text-secondary"
-                                      : score >= 0.65
+                                  className={`flex-shrink-0 border-0 text-xs ${score >= 0.82
+                                    ? "bg-secondary/10 text-secondary"
+                                    : score >= 0.65
                                       ? "bg-accent/30 text-accent-foreground"
                                       : "bg-muted/20 text-muted-foreground"
-                                  }`}
+                                    }`}
                                 >
                                   {getAtsTag(score)}
                                 </Badge>
@@ -464,13 +534,12 @@ export function CandidateDashboard() {
                               <div className="mb-4">
                                 <div className="h-1.5 bg-primary/10 rounded-full overflow-hidden">
                                   <div
-                                    className={`h-full rounded-full ${
-                                      score >= 0.82
-                                        ? "bg-secondary"
-                                        : score >= 0.65
+                                    className={`h-full rounded-full ${score >= 0.82
+                                      ? "bg-secondary"
+                                      : score >= 0.65
                                         ? "bg-accent"
                                         : "bg-muted"
-                                    }`}
+                                      }`}
                                     style={{ width: `${pct}%` }}
                                   />
                                 </div>

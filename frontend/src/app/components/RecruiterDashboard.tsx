@@ -10,7 +10,7 @@ export function RecruiterDashboard() {
   const navigate = useNavigate();
   const [activeRole, setActiveRole] = useState<string | null>(null);
 
-  const totalApplicants = MOCK_ROLES.reduce((sum, r) => sum + r.applicants, 0);
+  const totalInterested = MOCK_ROLES.reduce((sum, r) => sum + r.applicants, 0);
   const totalStrongMatches = MOCK_ROLES.reduce((sum, r) => sum + r.strongMatches, 0);
 
   const handleViewMatches = (roleId: string) => {
@@ -87,8 +87,8 @@ export function RecruiterDashboard() {
                     <Users className="w-6 h-6 text-secondary" />
                   </div>
                   <div>
-                    <p className="text-2xl font-semibold text-primary">{totalApplicants}</p>
-                    <p className="text-sm text-muted-foreground">Total Applicants</p>
+                    <p className="text-2xl font-semibold text-primary">{totalInterested}</p>
+                    <p className="text-sm text-muted-foreground">Total Interested</p>
                   </div>
                 </div>
               </CardContent>
@@ -116,9 +116,8 @@ export function RecruiterDashboard() {
             {MOCK_ROLES.map((role) => (
               <Card
                 key={role.id}
-                className={`transition-all cursor-pointer hover:shadow-md ${
-                  activeRole === role.id ? "ring-2 ring-primary" : ""
-                }`}
+                className={`transition-all cursor-pointer hover:shadow-md ${activeRole === role.id ? "ring-2 ring-primary" : ""
+                  }`}
                 onClick={() =>
                   setActiveRole(activeRole === role.id ? null : role.id)
                 }
@@ -129,9 +128,8 @@ export function RecruiterDashboard() {
                       <div className="flex items-center gap-3 mb-2 flex-wrap">
                         <CardTitle className="text-primary">{role.title}</CardTitle>
                         <Badge
-                          className={`border-0 text-xs ${
-                            departmentColor[role.department] ?? "bg-muted/20 text-muted-foreground"
-                          }`}
+                          className={`border-0 text-xs ${departmentColor[role.department] ?? "bg-muted/20 text-muted-foreground"
+                            }`}
                         >
                           {role.department}
                         </Badge>
@@ -158,7 +156,7 @@ export function RecruiterDashboard() {
                     <div className="flex items-center gap-4 text-sm">
                       <span className="flex items-center gap-1.5 text-muted-foreground">
                         <Users className="w-4 h-4" />
-                        {role.applicants} applicants
+                        {role.applicants} interested
                       </span>
                       <span className="flex items-center gap-1.5 text-secondary font-medium">
                         <TrendingUp className="w-4 h-4" />
