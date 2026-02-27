@@ -1,5 +1,9 @@
 // Check for a production API URL, otherwise fallback to the local Vite proxy or direct localhost
-const VITE_API_URL = import.meta.env.VITE_API_URL || '';
+let VITE_API_URL = import.meta.env.VITE_API_URL || '';
+// Railway auto-prunes https:// from variables sometimes. Safely re-add it if missing.
+if (VITE_API_URL && !VITE_API_URL.startsWith('http')) {
+  VITE_API_URL = `https://${VITE_API_URL}`;
+}
 const API_BASE = VITE_API_URL ? `${VITE_API_URL}/api/v1` : '/api/v1';
 
 export interface JobPosting {
