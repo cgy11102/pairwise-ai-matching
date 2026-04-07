@@ -1,140 +1,105 @@
-# Pairwise — AI Resume Matching Engine
+# Pairwise — AI-Powered Resume Matching Engine
 
-Pairwise uses semantic embeddings and LLM-powered explanations to rank and match candidates to job openings. It replaces slow, keyword-based ATS filtering with real-time AI matching built for US mid-market SaaS teams hiring technical talent.
+Semantic resume-to-job matching using vector embeddings and LLM-generated fit evidence.
+Built to replace slow keyword-based ATS filtering with real-time AI ranking for technical roles.
 
-## How It Works
+**Arizona State University — MS in AI/Business | Group Capstone Project, 2026**
 
-1. **Upload Resumes** — Upload candidate resumes (PDF, JSON, or text)
-2. **Define Requirements** — Enter job title, description, and requirements
-3. **Get Ranked Matches** — Receive the top 20 candidates with Match Scores (0.0–1.0), three Fit Evidence bullets each, and automated ATS tags
+---
+
+## The Problem
+
+Traditional ATS systems filter candidates by keyword overlap — a resume missing the exact phrase
+"distributed systems" gets rejected even if the candidate built one. Pairwise uses semantic
+vector similarity to match *meaning*, not keywords.
+
+## What I Built
+
+A full-stack AI matching application with a FastAPI backend and React frontend:
+
+- **Semantic matching engine** — sentence-transformers (`all-MiniLM-L6-v2`) embed both resumes
+  and job descriptions into the same vector space, then cosine similarity ranks candidates
+- **LLM-generated fit evidence** — Groq (`llama-3.3-70b`) explains *why* each match scored
+  the way it did, giving recruiters 3 specific evidence bullets per candidate
+- **Bias mitigation layer** — demographic signals are excluded from the vector matching step
+  before any score is computed; low-confidence matches are flagged for human review
+- **ATS-ready JSON output** — match scores + fit evidence delivered as a typed Pydantic payload
+  that integrates with Greenhouse, Lever, or Ashby without vendor customization
+- **4-screen React UI** — Landing → Resume Upload → Job Requirements → Ranked Results dashboard
 
 ## Architecture
 
-```
-├── backend/          Python + FastAPI + Groq
-│   ├── app/
-│   │   ├── main.py           FastAPI app with CORS
-│   │   ├── config.py         Settings from environment
-│   │   ├── api/routes.py     POST /api/v1/match endpoint
-│   │   ├── models/schemas.py Pydantic models (MatchPayload, FitEvidence, etc.)
-│   │   └── services/
-│   │       ├── embeddings.py   sentence-transformers for vector similarity
-│   │       ├── groq_client.py  Groq LLM for fit evidence generation
-│   │       └── matcher.py      Core ranking engine (embed → rank → explain)
-│   └── data/                 Sample job posting and resumes
-│
-├── frontend/         React + Vite + Tailwind CSS v4
-│   └── src/
-│       ├── app/
-│       │   ├── App.tsx                 4-page flow: Landing → Upload → Requirements → Results
-│       │   └── components/             shadcn/ui + Figma design system
-│       ├── lib/api.ts                  Typed API client
-│       └── styles/                     Tailwind v4 theme (navy/sage/gold)
-│
-└── Clickable prototype for SaaS/      Original Figma Make export
-```
+pairwise-ai-matching/
+├── backend/ Python 3.11 + FastAPI
+│ └── app/
+│ ├── api/routes.py POST /api/v1/match endpoint
+│ ├── models/schemas.py Pydantic: MatchPayload, FitEvidence, ATSTag
+│ └── services/
+│ ├── embeddings.py sentence-transformers vector encoding
+│ ├── groq_client.py Groq LLM for fit evidence generation
+│ └── matcher.py Core: embed → cosine rank → LLM explain
+└── frontend/ React 18 + Vite + Tailwind CSS v4
+└── src/
+├── App.tsx 4-screen application flow
+├── lib/api.ts Typed API client
+└── components/ shadcn/ui component library
+
 
 ## Tech Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| Backend | Python 3.11+, FastAPI | API server |
-| AI / LLM | Groq (llama-3.3-70b) | Fit evidence generation |
-| Embeddings | sentence-transformers (all-MiniLM-L6-v2) | Semantic resume ↔ job matching |
-| Frontend | React 18, Vite, Tailwind CSS v4 | Dashboard UI |
-| UI Components | shadcn/ui (Radix primitives) | Buttons, cards, inputs, badges |
-| Design | Figma Make export | Original prototype reference |
+| Layer | Technology |
+|---|---|
+| Backend API | Python 3.11, FastAPI, Pydantic |
+| AI / LLM | Groq API (`llama-3.3-70b`) |
+| Embeddings | `sentence-transformers` (`all-MiniLM-L6-v2`) |
+| Frontend | React 18, Vite, Tailwind CSS v4, shadcn/ui |
+| Infrastructure | Docker, Railway |
 
-## Quick Start
+## Match Score Logic
 
-### Prerequisites
-
-- Python 3.11+
-- Node.js 18+
-- A [Groq API key](https://console.groq.com/)
-
-### Backend
-
-```bash
-cd backend
-cp .env.example .env       # Add your GROQ_API_KEY
-pip install -r requirements.txt
-python run.py              # Starts on http://localhost:8000
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev                # Starts on http://localhost:5173
-```
-
-Open **http://localhost:5173** in your browser.
+| Score | ATS Tag | Action |
+|---|---|---|
+| 0.82+ | `strong_match` | Auto-advance to interview queue |
+| 0.65–0.81 | `good_match` | Recruiter review recommended |
+| 0.50–0.64 | `review` | Closer look needed |
+| < 0.50 | `below_threshold` | Does not meet minimum bar |
 
 ## API
 
-### `POST /api/v1/match`
+**`POST /api/v1/match`** — Send a job posting + resume array, receive ranked candidates with
+match scores and fit evidence.
 
-Send a job posting and array of resumes, receive ranked candidates.
+**`GET /api/v1/health`** — Service health check.
 
-**Request:**
-```json
-{
-  "job": {
-    "id": "J-101",
-    "title": "Senior Backend Engineer",
-    "company": "Acme SaaS",
-    "description": "Build scalable microservices...",
-    "requirements": ["5+ years Python", "Distributed systems"],
-    "preferred": ["Kubernetes experience"],
-    "location": "Remote (US)",
-    "department": "Engineering"
-  },
-  "resumes": [...],
-  "top_k": 20
-}
+See [`backend/app/api/routes.py`](./backend/app/api/routes.py) for full request/response schemas.
+
+## How to Run
+
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+- [Groq API key](https://console.groq.com/)
+
+### Backend
+```bash
+cd backend
+cp .env.example .env     # Add your GROQ_API_KEY
+pip install -r requirements.txt
+python run.py            # http://localhost:8000
 ```
 
-**Response (Match JSON Payload):**
-```json
-{
-  "job_id": "J-101",
-  "job_title": "Senior Backend Engineer",
-  "total_applicants": 150,
-  "top_matches": [
-    {
-      "candidate_id": "C-1001",
-      "candidate_name": "Alex Chen",
-      "match_score": 0.93,
-      "fit_evidence": [
-        {"point": "7 years distributed systems experience aligns with requirements.", "category": "experience_match"},
-        {"point": "Proficient in Python and Kubernetes.", "category": "skill_match"},
-        {"point": "M.S. Computer Science with systems focus.", "category": "education_match"}
-      ],
-      "ats_tag": "strong_match"
-    }
-  ]
-}
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev              # http://localhost:5173
 ```
 
-### `GET /api/v1/health`
+## Key Design Decisions
 
-Returns service health status.
-
-## Match Score Thresholds
-
-| Score | ATS Tag | Meaning |
-|-------|---------|---------|
-| 0.82+ | `strong_match` | Advance to interview |
-| 0.65–0.81 | `good_match` | Recruiter review recommended |
-| 0.50–0.64 | `review` | Possible fit, needs closer look |
-| < 0.50 | `below_threshold` | Does not meet minimum criteria |
-
-## Target Customer
-
-US-based B2B SaaS and IT services companies with 300–1,500 employees hiring 20–100 technical roles annually. Integrates with mid-tier ATS platforms (Greenhouse, Lever, Ashby).
-
-## Team
-
-Arizona State University — MS-AIB AI Business Strategy Group Project, 2026
+- **Groq over OpenAI for fit evidence**: Groq's inference speed (~10x faster) made real-time
+  per-candidate explanation practical without batching
+- **sentence-transformers over OpenAI embeddings**: Runs locally, no API cost per resume,
+  and `all-MiniLM-L6-v2` is well-benchmarked for short-text semantic similarity
+- **Human-in-the-loop by default**: Scores below 0.50 never auto-tag — they always surface
+  for manual review, keeping a human accountable for rejection decisions
