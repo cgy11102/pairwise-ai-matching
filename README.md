@@ -33,6 +33,7 @@ A full-stack AI matching application with a FastAPI backend and React frontend:
 
 ## Architecture
 
+
 pairwise-ai-matching/
 ├── backend/ Python 3.11 + FastAPI
 │ └── app/
