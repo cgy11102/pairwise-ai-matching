@@ -27,6 +27,10 @@ A full-stack AI matching application with a FastAPI backend and React frontend:
   that integrates with Greenhouse, Lever, or Ashby without vendor customization
 - **4-screen React UI** — Landing → Resume Upload → Job Requirements → Ranked Results dashboard
 
+## Demo
+
+![Pairwise Landing Page](./pairwise-demo.png)
+
 ## Architecture
 
 pairwise-ai-matching/
