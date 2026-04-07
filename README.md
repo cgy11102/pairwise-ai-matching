@@ -3,7 +3,7 @@
 Semantic resume-to-job matching using vector embeddings and LLM-generated fit evidence.
 Built to replace slow keyword-based ATS filtering with real-time AI ranking for technical roles.
 
-**Arizona State University — MS in AI/Business | Group Capstone Project, 2026**
+**Arizona State University — CIS 568: AI Systems | Group Project, Spring 2026**
 
 ---
 
@@ -32,8 +32,6 @@ A full-stack AI matching application with a FastAPI backend and React frontend:
 ![Pairwise Landing Page](./pairwise-demo.png)
 
 ## Architecture
-
-
 pairwise-ai-matching/
 ├── backend/ Python 3.11 + FastAPI
 │ └── app/
@@ -48,7 +46,6 @@ pairwise-ai-matching/
 ├── App.tsx 4-screen application flow
 ├── lib/api.ts Typed API client
 └── components/ shadcn/ui component library
-
 
 ## Tech Stack
 
