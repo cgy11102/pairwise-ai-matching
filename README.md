@@ -32,16 +32,18 @@ A full-stack AI matching application with a FastAPI backend and React frontend:
 ![Pairwise Landing Page](./pairwise-demo.png)
 
 ## Architecture
-pairwise-ai-matching/
-├── backend/                  Python 3.11 + FastAPI
-│   └── app/
-│       ├── api/routes.py     POST /api/v1/match endpoint
-│       ├── models/schemas.py Pydantic: MatchPayload, FitEvidence, ATSTag
-│       └── services/
-│           ├── embeddings.py sentence-transformers vector encoding
-│           ├── groq_client.py Groq LLM for fit evidence generation
-│           └── matcher.py    Core: embed → cosine rank → LLM explain
-└──
+| Folder / File | Purpose |
+|---|---|
+| `backend/` | Python 3.11 + FastAPI |
+| `backend/app/api/routes.py` | POST /api/v1/match endpoint |
+| `backend/app/models/schemas.py` | Pydantic: MatchPayload, FitEvidence, ATSTag |
+| `backend/app/services/embeddings.py` | sentence-transformers vector encoding |
+| `backend/app/services/groq_client.py` | Groq LLM for fit evidence generation |
+| `backend/app/services/matcher.py` | Core: embed, cosine rank, LLM explain |
+| `frontend/` | React 18 + Vite + Tailwind CSS v4 |
+| `frontend/src/App.tsx` | 4-screen application flow |
+| `frontend/src/lib/api.ts` | Typed API client |
+| `frontend/src/components/` | shadcn/ui component library |
 
 ## Tech Stack
 
